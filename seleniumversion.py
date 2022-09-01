@@ -1,26 +1,71 @@
 from pyuseragents import random as random_useragent
 from selenium import webdriver
 import time
+
+from selenium.common.exceptions import NoSuchElementException
+
 import TG
+import threading
 
 from selenium.webdriver.common.by import By
 
-randomUserAgent = random_useragent()
-options = webdriver.ChromeOptions()
-options.add_argument(randomUserAgent)
-driver = webdriver.Chrome(executable_path='C:\\Users\\larso\\PycharmProjects\\chromedriver.exe', options=options)
+
+# randomUserAgent = random_useragent()
+# options = webdriver.ChromeOptions()
+# options.add_argument(randomUserAgent)
+# driver = webdriver.Chrome(executable_path='C:\\Users\\larso\\PycharmProjects\\discord giveaway winner\\chromedriver.exe', options=options)
 # driver.add_cookie({'accept': '*/*', 'accept-language': 'ru,en;q=0.9,vi;q=0.8,es;q=0.7'})
-driver.get("https://opensea.io/collection/car-tooned")
-while True:
-    try:
-        numOfCars = driver.find_element(By.ID, 'main').text.split('\n')[3]
-        if numOfCars == '29':
-            TG.signal_myTG_silent("Still 29")
-            time.sleep(300)
+
+def create_5lists_of_10000domains():
+    symbols = list("qwertyuiopasdfghjklzxcvbnm1234567890")
+    result = []
+    for z in symbols:
+        for x in symbols:
+            for c in symbols:
+                result.append(f"{z}{x}{c}")
+    list1 = []
+    list2 = []
+    list3 = []
+    list4 = []
+    list5 = []
+    idx = 0
+    while idx < len(result)-5:
+        list1.append(result[idx])
+        list2.append(result[idx + 1])
+        list3.append(result[idx + 2])
+        list4.append(result[idx + 3])
+        list5.append(result[idx + 4])
+        idx += 5
+
+    return [[list1], [list2], [list3], [list4], [list5]]
+
+
+def check_doctor_tickets():
+    randomUserAgent = random_useragent()
+    options = webdriver.ChromeOptions()
+    options.add_argument(randomUserAgent)
+    driver = webdriver.Chrome(
+        executable_path='C:\\Users\\larso\\PycharmProjects\\discord giveaway winner\\chromedriver.exe', options=options)
+    while True:
+        try:
+            driver.get("""https://gorzdrav.spb.ru/service-free-schedule#[{"district":"4"},{"lpu":"296"}]""")
+        except Exception as e:
+            TG.signal_myTG("Что-то не так : " + e)
         else:
-            TG.signal_myTG(f'NEW CARS = {numOfCars}')
             time.sleep(15)
-        driver.refresh()
-    except Exception as e:
-        TG.signal_myTG_silent(e)
-        #print()
+            try:
+                element = driver.find_element(By.XPATH, "/html/body/div/div[1]/div[12]/div[3]/div[3]/div/div[1]/div[16]")
+                element = element.find_element(By.CLASS_NAME, "service-speciality__tickets")
+                TG.signal_myTG("Появились номерки : " + element.text)
+                time.sleep(60)
+            except NoSuchElementException:
+                TG.signal_myTG("Пока номерков нет")
+                time.sleep(1200)
+            except Exception as e:
+                TG.signal_myTG("Ошибка : " + e)
+                time.sleep(300)
+                driver.refresh()
+                time.sleep(15)
+
+
+thread1 = threading.Thread(target=check_doctor_tickets).start()

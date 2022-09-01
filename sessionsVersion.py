@@ -11,7 +11,7 @@ with open('token.txt') as f:
 sesh = requests.Session()
 sesh.headers.update({'user-agent': random_useragent(), 'Content-Type': 'application/json', 'X-Wix-Client-Artifact-Id': 'wix-form-builder'})
 # session.headers['authorization'] = token
-r = sesh.get('https://opensea.io/collection/car-tooned', verify=False)
+r = sesh.get('https://gorzdrav.spb.ru/service-free-schedule#[{"district":"4"},{"lpu":"296"}]', verify=False)
 # if 'username' not in loads(r.text):
 #     raise Exception('invalidtoken')
 print(r.text)

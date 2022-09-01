@@ -16,30 +16,6 @@ from selenium.webdriver.common.by import By
 # driver = webdriver.Chrome(executable_path='C:\\Users\\larso\\PycharmProjects\\discord giveaway winner\\chromedriver.exe', options=options)
 # driver.add_cookie({'accept': '*/*', 'accept-language': 'ru,en;q=0.9,vi;q=0.8,es;q=0.7'})
 
-def create_5lists_of_10000domains():
-    symbols = list("qwertyuiopasdfghjklzxcvbnm1234567890")
-    result = []
-    for z in symbols:
-        for x in symbols:
-            for c in symbols:
-                result.append(f"{z}{x}{c}")
-    list1 = []
-    list2 = []
-    list3 = []
-    list4 = []
-    list5 = []
-    idx = 0
-    while idx < len(result)-5:
-        list1.append(result[idx])
-        list2.append(result[idx + 1])
-        list3.append(result[idx + 2])
-        list4.append(result[idx + 3])
-        list5.append(result[idx + 4])
-        idx += 5
-
-    return [[list1], [list2], [list3], [list4], [list5]]
-
-
 def check_doctor_tickets():
     randomUserAgent = random_useragent()
     options = webdriver.ChromeOptions()

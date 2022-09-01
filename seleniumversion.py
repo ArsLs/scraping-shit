@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from pyuseragents import random as random_useragent
+# from pyuseragents import random as random_useragent
 from selenium import webdriver
 import time
 
@@ -19,9 +19,9 @@ from selenium.webdriver.common.by import By
 # driver.add_cookie({'accept': '*/*', 'accept-language': 'ru,en;q=0.9,vi;q=0.8,es;q=0.7'})
 
 def check_doctor_tickets():
-    randomUserAgent = random_useragent()
+    # randomUserAgent = random_useragent()
     options = webdriver.ChromeOptions()
-    options.add_argument(randomUserAgent)
+    # options.add_argument(randomUserAgent)
     driver = webdriver.Chrome(
         executable_path='C:\\Users\\larso\\PycharmProjects\\discord giveaway winner\\chromedriver.exe', options=options)
     while True:

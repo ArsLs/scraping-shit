@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 from pyuseragents import random as random_useragent
 from selenium import webdriver
 import time
+
 
 from selenium.common.exceptions import NoSuchElementException
 
